@@ -118,28 +118,88 @@ void imprimeColunas(){
     printf("\n");
 }
 
+void posicionaCone(int centro){
+    int altura = 2; // Altura do cone
+
+   for(int i = 0; i < altura; i++){ //Incrementa a altura do cone do baixo para o alto
+   
+        int inicio = centro - i; // Início da linha do cone
+        int fim = centro + i; // Fim da linha do cone
+        if(inicio < 0) inicio = 0; // Garante que o início não seja menor que 0
+        if(fim >= COLUNA) fim = COLUNA - 1; // Garante que o fim não seja maior que o tamanho do tabuleiro
+
+        for(int j = inicio; j <= fim; j++){
+            // a posição do cone inicio até o fim, é marcada com 5
+            tabuleiro[centro + i][j] = '5'; // Marca a posição do cone
+        }
+    }
+
+}
+
+void posicionaCruz(int centro) {
+    int tamanho = 3; // Tamanho da cruz (3 para cada lado do centro)
+    for(int i = 0; i < tamanho; i++){
+        int inicio = centro - i; // Início da linha da cruz
+        int fim = centro + i; // Fim da linha da cruz
+        if(inicio < 0) inicio = 0; // Garante que o início não seja menor que 0
+        if(fim >= COLUNA) fim = COLUNA - 1; // Garante que o fim não seja maior que o tamanho do tabuleiro
+        for(int j = inicio; j <= fim; j++){
+            // a posição da cruz inicio até o fim, é marcada com 5
+            tabuleiro[centro][j] = '5'; // Marca a linha horizontal da cruz
+            tabuleiro[j][centro] = '5'; // Marca a linha vertical da cruz
+        }
+    }
+}
+void posicionaOctaedro(int centro) {
+    int altura = 1; // "raio" do losango (do centro até o topo/base)
+    
+    for(int i = 1; i <= altura; i++) {
+        int inicio = centro + i; // Início da linha do octaedro
+        int fim = centro - i; // Fim da linha do octaedro
+        if(inicio >= LINHA) inicio = LINHA - 1; // Garante que o início não seja maior que o tamanho do tabuleiro
+        if(fim < 0) fim = 0; // Garante que o fim não seja menor que 0
+        for(int j = fim; j <= inicio; j++){
+            // a posição do octaedro inicio até o fim, é marcada com 5
+            tabuleiro[j][centro] = '5'; // Marca a posição do octaedro
+            if(i == altura) {
+                // Marca a base do octaedro
+                tabuleiro[centro][j] = '5'; // Marca a base do octaedro
+            }
+        }
+
+        }
+    }
+
 
 int main(){
 
     printf("Tabuleiro:\n");
 
     
-
     // Inicializa o tabuleiro
     inicializaTabuleiro();
     
     // Posiciona navio1
-    NavioHorizontal(1, 8);
+    NavioHorizontal(1, 1); // Exemplo de posicionamento do navio horizontal na linha 1, coluna 1
     
     // Posiciona navio2
-    NavioVertical(8, 1);
+    NavioVertical(4, 2); // Exemplo de posicionamento do navio vertical na linha 4, coluna 2
 
 
     // Posiciona navio3
-    NavioDiagonal(5, 5);
+    NavioDiagonal(7, 3); // Exemplo de posicionamento do navio diagonal na linha 7, coluna 3
 
     // Posiciona navio4
-    NavioDiagonal(7, 3);
+    NavioDiagonal(8,6); // Exemplo de posicionamento do navio diagonal na linha 8, coluna 6
+
+    // Habilidade em cone
+    posicionaCone(4); // Exemplo de posicionamento do cone no centro do índice 4
+
+    // Habilidade em cruz
+    posicionaCruz(2); // Exemplo de posicionamento da cruz no centro do índice 2
+
+    // Habilidade em octaedro
+    posicionaOctaedro(7); // Exemplo de posicionamento do octaedro no centro do índice 7
 
     // Imprime as colunas
     imprimeColunas();
